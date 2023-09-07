@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getLaunchById, getLatestLaunches } from '../../services/spacex'
+
+// Página dinámica (a nivel de servidor)
+export const prerender = false
+
+const { id } = Astro.params
+
+let launch
+if (id) {
+    launch = await getLaunchById({ id })
+}
+
+// Solo si es estático
+// export async function getStaticPaths() {
+//     const launches = await getLatestLaunches()
+//     return launches.map(launch => ({
+//         params: { id: launch.id }
+//     }))
+// }
+---
+
+<Layout title={`Lanzamiento ${id}`}>
+    <article>
+        {launch?.id}
+    </article>
+</Layout>
